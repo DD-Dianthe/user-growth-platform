@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+.venv/
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Node
+node_modules/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Env (keep .env.example)
+.env
+!.env.example
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Temp build output
+frontend/dist/
+
+# Windows artifacts
+nul
+
+# WorkBuddy
+.workbuddy/
+
+# Data (keep SQLite for deployment)
+data/mock/*.csv
+backend/data/app.db
