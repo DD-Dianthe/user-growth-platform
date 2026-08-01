@@ -305,16 +305,24 @@ def _run_isolation_forest(df: pd.DataFrame, contamination: float = 0.05, feature
     anomaly_samples = []
     for idx in anomaly_idx:
         row = df.iloc[idx]
-        sample = {"_index": idx}
+        sample: dict[str, Any] = {"_index": int(idx)}
         for c in use_cols[:5]:
-            sample[c] = row[c] if not pd.isna(row[c]) else None
+            val = row[c]
+            if pd.isna(val):
+                sample[c] = None
+            elif isinstance(val, (np.integer,)):
+                sample[c] = int(val)
+            elif isinstance(val, (np.floating,)):
+                sample[c] = float(round(val, 4))
+            else:
+                sample[c] = str(val)
         anomaly_samples.append(sample)
 
     return {
         "method": "IsolationForest",
-        "features": use_cols,
-        "anomaly_count": anomaly_count,
-        "normal_count": normal_count,
+        "features": list(use_cols),
+        "anomaly_count": int(anomaly_count),
+        "normal_count": int(normal_count),
         "anomaly_ratio": f"{round(anomaly_count / len(df) * 100, 2)}%",
         "anomaly_samples": anomaly_samples,
     }

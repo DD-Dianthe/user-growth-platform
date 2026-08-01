@@ -42,7 +42,12 @@ def detect_column_type(series: pd.Series) -> dict:
     null_count = int(series.isna().sum())
     unique_count = int(series.nunique())
     total = len(series)
-    sample_values = series.dropna().head(5).tolist()
+    sample_values = [
+        int(v) if isinstance(v, (np.integer,)) else
+        float(round(v, 4)) if isinstance(v, (np.floating,)) else
+        str(v) if not isinstance(v, (str, int, float, bool, type(None))) else v
+        for v in series.dropna().head(5).tolist()
+    ]
 
     info: dict[str, Any] = {
         "name": str(series.name),
