@@ -256,3 +256,66 @@ export async function runChurnPrediction(): Promise<ChurnRunResponse> {
   const { data } = await api.post<ChurnRunResponse>('/churn/run');
   return data;
 }
+
+// ═══════════════════════════════════════════════
+//  自助上传分析 API
+// ═══════════════════════════════════════════════
+
+export interface ColumnInfo {
+  name: string;
+  dtype: string;
+  category: 'numeric' | 'categorical' | 'datetime' | 'text';
+  null_count: number;
+  unique_count: number;
+  sample_values: any[];
+  null_ratio: number;
+  stats?: Record<string, number | string | null>;
+  distribution?: Record<string, number>;
+}
+
+export interface UploadResponse {
+  session_id: string;
+  filename: string;
+  rows: number;
+  columns: number;
+  columns_info: ColumnInfo[];
+}
+
+export interface PreviewResponse {
+  session_id: string;
+  rows: Record<string, any>[];
+  total_rows: number;
+}
+
+export interface AnalysisRequest {
+  session_id: string;
+  methods: string[];
+  target_column?: string;
+  feature_columns?: string[];
+  n_clusters?: number;
+  contamination?: number;
+}
+
+/** 上传数据文件 */
+export async function uploadDataFile(file: File): Promise<UploadResponse> {
+  const formData = new FormData();
+  formData.append('file', file);
+  const { data } = await api.post<UploadResponse>('/data/upload', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+  return data;
+}
+
+/** 预览上传数据 */
+export async function previewData(sessionId: string, limit = 50): Promise<PreviewResponse> {
+  const { data } = await api.get<PreviewResponse>(`/data/${sessionId}/preview`, {
+    params: { limit },
+  });
+  return data;
+}
+
+/** 运行自动分析 */
+export async function runAutoAnalysis(req: AnalysisRequest): Promise<any> {
+  const { data } = await api.post('/auto-analyze/run', req);
+  return data;
+}

@@ -14,13 +14,15 @@ from app.routers.dashboard import router as dashboard_router
 from app.routers.anomaly import router as anomaly_router
 from app.routers.user_segments import router as user_segments_router
 from app.routers.churn import router as churn_router
+from app.routers.upload import router as upload_router
+from app.routers.auto_analyze import router as auto_analyze_router
 
 # 启动时初始化数据库
 init_db()
 
 app = FastAPI(
     title="用户增长智能分析平台",
-    description="BI 看板 / 漏斗分析 / 留存分析 API",
+    description="BI 看板 / 自助上传分析 / 异常检测 / 流失预测 / 用户分群 / ML",
     version="0.1.0",
 )
 
@@ -37,6 +39,8 @@ app.include_router(dashboard_router)
 app.include_router(anomaly_router)
 app.include_router(user_segments_router)
 app.include_router(churn_router)
+app.include_router(upload_router)
+app.include_router(auto_analyze_router)
 
 
 @app.get("/health")

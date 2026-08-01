@@ -1,10 +1,11 @@
 import { Layout, Divider } from 'antd';
-import { BarChartOutlined } from '@ant-design/icons';
+import { BarChartOutlined, CloudUploadOutlined } from '@ant-design/icons';
 
 import Dashboard from './pages/Dashboard';
 import AnomalyPanel from './components/AnomalyPanel';
 import ChurnPanel from './components/ChurnPanel';
 import UserSegmentsPanel from './components/UserSegmentsPanel';
+import UploadSection from './components/UploadSection';
 
 const { Header, Content } = Layout;
 
@@ -39,6 +40,22 @@ function App() {
 
       {/* ── 内容区（单页滚动） ── */}
       <Content style={{ padding: 24, maxWidth: 1400, margin: '0 auto', width: '100%' }}>
+        {/* ── 第 0 节：自助上传分析 ── */}
+        <section style={{ marginBottom: 32 }}>
+          <div style={{ marginBottom: 16 }}>
+            <h1 style={{ fontSize: 22, fontWeight: 600, color: 'rgba(0,0,0,0.85)', marginBottom: 4 }}>
+              <CloudUploadOutlined style={{ marginRight: 8, color: '#1677ff' }} />
+              自助数据分析
+            </h1>
+            <p style={{ fontSize: 13, color: 'rgba(0,0,0,0.45)', margin: 0 }}>
+              上传你自己的 CSV / Excel 数据，系统自动识别列类型、生成看板图表，并支持选择 KMeans、XGBoost、Isolation Forest 等机器学习方法
+            </p>
+          </div>
+          <UploadSection />
+        </section>
+
+        <Divider style={{ margin: '0 0 32px', borderColor: '#e8e8e8' }} />
+
         {/* ── 第 1 节：概览看板 ── */}
         <section style={{ marginBottom: 32 }}>
           <div style={{ marginBottom: 16 }}>
