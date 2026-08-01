@@ -79,7 +79,7 @@ export default function ChurnPanel() {
   if (loading) {
     return (
       <Card title="⚠️ 用户流失预测">
-        <Spin tip="加载流失数据...">
+        <Spin description="加载流失数据...">
           <div style={{ height: 200 }} />
         </Spin>
       </Card>
@@ -217,7 +217,7 @@ export default function ChurnPanel() {
               title="高风险用户"
               value={ov.high_risk}
               suffix={<Text type="secondary" style={{ fontSize: 14 }}>人</Text>}
-              valueStyle={{ color: '#f5222d', fontSize: 28 }}
+              styles={{ content: { color: '#f5222d', fontSize: 28 } }}
               prefix={<FallOutlined />}
             />
           </Card>
@@ -228,7 +228,7 @@ export default function ChurnPanel() {
               title="安全用户"
               value={ov.total_users - ov.high_risk}
               suffix={<Text type="secondary" style={{ fontSize: 14 }}>人</Text>}
-              valueStyle={{ color: '#52c41a', fontSize: 28 }}
+              styles={{ content: { color: '#52c41a', fontSize: 28 } }}
               prefix={<SafetyOutlined />}
             />
           </Card>
@@ -239,7 +239,7 @@ export default function ChurnPanel() {
               title="平均流失概率"
               value={(ov.avg_probability * 100).toFixed(1)}
               suffix="%"
-              valueStyle={{ color: '#fa8c16', fontSize: 28 }}
+              styles={{ content: { color: '#fa8c16', fontSize: 28 } }}
               prefix={<RiseOutlined />}
             />
           </Card>
@@ -289,16 +289,16 @@ export default function ChurnPanel() {
             <Card size="small" title="模型评估 (XGBoost)">
               <Row gutter={[16, 16]}>
                 <Col xs={12} sm={6}>
-                  <Statistic title="Accuracy" value={modelMetrics.accuracy} precision={4} valueStyle={{ color: '#1890ff' }} />
+                  <Statistic title="Accuracy" value={modelMetrics.accuracy} precision={4} styles={{ content: { color: '#1890ff' } }} />
                 </Col>
                 <Col xs={12} sm={6}>
-                  <Statistic title="Precision" value={modelMetrics.precision} precision={4} valueStyle={{ color: '#52c41a' }} />
+                  <Statistic title="Precision" value={modelMetrics.precision} precision={4} styles={{ content: { color: '#52c41a' } }} />
                 </Col>
                 <Col xs={12} sm={6}>
-                  <Statistic title="Recall" value={modelMetrics.recall} precision={4} valueStyle={{ color: '#fa8c16' }} />
+                  <Statistic title="Recall" value={modelMetrics.recall} precision={4} styles={{ content: { color: '#fa8c16' } }} />
                 </Col>
                 <Col xs={12} sm={6}>
-                  <Statistic title="AUC" value={modelMetrics.auc} precision={4} valueStyle={{ color: '#722ed1' }} />
+                  <Statistic title="AUC" value={modelMetrics.auc} precision={4} styles={{ content: { color: '#722ed1' } }} />
                 </Col>
               </Row>
               <div style={{ marginTop: 12, fontSize: 12, color: '#999' }}>

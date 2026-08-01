@@ -25,7 +25,7 @@ const KpiCard: React.FC<Props> = ({
     : value;
 
   return (
-    <Card loading={loading} bordered={false} className="kpi-card">
+    <Card loading={loading} variant="borderless" className="kpi-card">
       <div className="kpi-card-inner">
         <div className="kpi-icon" style={{ background: iconColor }}>
           {icon}

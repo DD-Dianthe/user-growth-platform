@@ -204,7 +204,7 @@ export default function UploadSection() {
 
   // ── 渲染 KMeans 结果 ──
   const renderKmeans = (data: any) => {
-    if (data?.error) return <Alert type="error" message={data.error} />;
+    if (data?.error) return <Alert type="error" title={data.error} />;
     const clusterStats = data.cluster_stats || [];
     const radarData = data.radar_data || {};
     const features = data.features || [];
@@ -243,7 +243,7 @@ export default function UploadSection() {
 
   // ── 渲染 XGBoost 结果 ──
   const renderXgboost = (data: any) => {
-    if (data?.error) return <Alert type="error" message={data.error} />;
+    if (data?.error) return <Alert type="error" title={data.error} />;
     const metrics = data.metrics || {};
     const importance = data.feature_importance || [];
 
@@ -288,7 +288,7 @@ export default function UploadSection() {
 
   // ── 渲染 IsolationForest 结果 ──
   const renderIsolationForest = (data: any) => {
-    if (data?.error) return <Alert type="error" message={data.error} />;
+    if (data?.error) return <Alert type="error" title={data.error} />;
     const samples = data.anomaly_samples || [];
 
     const pieOption = {
@@ -308,8 +308,8 @@ export default function UploadSection() {
     return (
       <div>
         <Row gutter={16} style={{ marginBottom: 16 }}>
-          <Col span={6}><Statistic title="异常数" value={data.anomaly_count} valueStyle={{ color: '#ff4d4f' }} /></Col>
-          <Col span={6}><Statistic title="正常数" value={data.normal_count} valueStyle={{ color: '#52c41a' }} /></Col>
+          <Col span={6}><Statistic title="异常数" value={data.anomaly_count} styles={{ content: { color: '#ff4d4f' } }} /></Col>
+          <Col span={6}><Statistic title="正常数" value={data.normal_count} styles={{ content: { color: '#52c41a' } }} /></Col>
           <Col span={6}><Statistic title="异常比例" value={data.anomaly_ratio} /></Col>
           <Col span={6}><Statistic title="特征数" value={(data.features || []).length} /></Col>
         </Row>
@@ -361,7 +361,7 @@ export default function UploadSection() {
             disabled={uploading}
           >
             {uploading ? (
-              <Spin tip="上传解析中..." size="large" style={{ padding: 40 }} />
+              <Spin description="上传解析中..." size="large" style={{ padding: 40 }} />
             ) : (
               <div style={{ padding: 40 }}>
                 <p className="ant-upload-drag-icon">
@@ -380,7 +380,7 @@ export default function UploadSection() {
             style={{ marginTop: 16 }}
             type="info"
             showIcon
-            message="上传你的数据后，系统会自动识别列类型、生成看板图表，并支持选择 ML 方法进行分析"
+            title="上传你的数据后，系统会自动识别列类型、生成看板图表，并支持选择 ML 方法进行分析"
           />
         </Card>
       )}
@@ -393,7 +393,7 @@ export default function UploadSection() {
             <Row gutter={16} align="middle">
               <Col flex="auto">
                 <Row gutter={24}>
-                  <Col><Statistic title="文件名" value={uploadInfo.filename} valueStyle={{ fontSize: 14 }} /></Col>
+                  <Col><Statistic title="文件名" value={uploadInfo.filename} styles={{ content: { fontSize: 14 } }} /></Col>
                   <Col><Statistic title="行数" value={uploadInfo.rows} /></Col>
                   <Col><Statistic title="列数" value={uploadInfo.columns} /></Col>
                 </Row>
@@ -441,7 +441,7 @@ export default function UploadSection() {
             <Table
               dataSource={previewRows}
               columns={previewColumns}
-              rowKey={(_, idx) => String(idx)}
+              rowKey={(record) => JSON.stringify(record)}
               pagination={{ pageSize: 10, size: 'small' }}
               size="small"
               scroll={{ x: 'max-content' }}
@@ -532,7 +532,7 @@ export default function UploadSection() {
           {analyzing && (
             <Card>
               <div style={{ textAlign: 'center', padding: 40 }}>
-                <Spin size="large" tip="正在运行机器学习分析..." />
+                <Spin size="large" description="正在运行机器学习分析..." />
               </div>
             </Card>
           )}

@@ -155,7 +155,7 @@ const AnomalyPanel: React.FC = () => {
         <Table
           dataSource={alerts}
           columns={columns}
-          rowKey={(r: AlertItem, i?: number) => `${r.alert_date}_${r.method}_${i ?? 0}`}
+          rowKey={(r: AlertItem) => `${r.alert_date}_${r.method}`}
           size="small"
           pagination={{ pageSize: 10, showSizeChanger: false }}
           scroll={{ x: 800 }}
